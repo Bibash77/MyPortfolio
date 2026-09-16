@@ -1,4 +1,10 @@
 document.getElementById("year").textContent=new Date().getFullYear();
+const revealTargets=document.querySelectorAll(".hero-copy,.portrait-panel,.section-header,.timeline-entry,.stack-group,.project-card,.engineering-section .pipeline > div,.footer-info article,.contact-inner");
+document.documentElement.classList.add("reveal-ready");
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+  if(entry.isIntersecting){entry.target.classList.add("is-visible");revealObserver.unobserve(entry.target)}
+}),{threshold:.12});
+revealTargets.forEach(target=>{target.classList.add("reveal");revealObserver.observe(target)});
 const filters=[...document.querySelectorAll(".filter")];
 const cards=[...document.querySelectorAll(".project-card")];
 const search=document.getElementById("projectSearch");
