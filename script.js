@@ -15,7 +15,8 @@ function update(){
   let visible=0;
   cards.forEach(card=>{
     const cats=(card.dataset.category||"").split(" ");
-    const text=((card.dataset.search||"")+" "+card.innerText).toLowerCase();
+    const index=cards.indexOf(card);
+    const text=((card.dataset.search||"")+" "+card.innerText+" "+JSON.stringify(PROFILE.en.projects[index])+" "+JSON.stringify(PROFILE.ja.projects[index])+" "+(card.dataset.category.includes("professional")?" バックエンド":"")).toLowerCase();
     const okCat=active==="all"||cats.includes(active);
     const okSearch=!q||text.includes(q);
     card.classList.toggle("hidden",!(okCat&&okSearch));
@@ -25,10 +26,12 @@ function update(){
 }
 filters.forEach(btn=>btn.addEventListener("click",()=>{
   filters.forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");active=btn.dataset.filter;update();
+  btn.classList.add("active");active=btn.dataset.filter;filters.forEach(x=>x.setAttribute("aria-pressed",String(x===btn)));update();
 }));
 search.addEventListener("input",update);
 document.addEventListener("keydown",e=>{
-  if(e.key==="/"&&document.activeElement!==search){e.preventDefault();search.focus();}
+  if(e.key==="/"&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!document.querySelector("dialog[open]")&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)&&!document.activeElement.isContentEditable){e.preventDefault();search.focus();}
 });
 update();
+document.addEventListener("localechange",update);
+filters.forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.filter===active)));
