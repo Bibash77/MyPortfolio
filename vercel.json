@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {"source": "/", "has": [{"type": "header", "key": "x-vercel-ip-country", "value": "JP"}], "destination": "/geo-ja.html"},
+    {"source": "/", "has": [{"type": "header", "key": "x-vercel-ip-country", "value": "[A-Z]{2}"}], "destination": "/geo-en.html"}
+  ],
+  "headers": [
+    {"source": "/", "headers": [{"key": "Cache-Control", "value": "private, no-store"}, {"key": "Vary", "value": "x-vercel-ip-country"}]}
+  ]
+}
