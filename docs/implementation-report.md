@@ -38,3 +38,9 @@
 The explicit locale URL intentionally takes priority over conflicting saved preference, as required for deliberately opened `/ja/` and `/en/` links. Stored manual choice governs automatic root visits. On unknown-country static hosting the default is browser language, not geographic detection. With JavaScript disabled, the static country-selected locale remains readable but localStorage preference and companion interactions cannot apply.
 
 Professional evidence is self-published. Existing “Present” dates, high-level Mohini details, mixed category tags and incomplete production-status documentation are preserved conservatively. No qualifications, numerical impact, hiring suitability, visa details or unpublished contact information were inferred. Context-aware suggestions were omitted to avoid complexity.
+
+## Delivery status
+
+Feature branch: `feature/japanese-localization-companion` (local). The implementation is committed. `docs/pull-request.md` contains the prepared PR title/body. The working tree is clean after committing delivery documentation.
+
+Publishing is blocked by external credentials: terminal Git cannot authenticate to HTTPS GitHub, and the connected GitHub integration returns HTTP 403 `Resource not accessible by integration` when creating the Git tree. The repository metadata indicates the account has push rights, but the integration itself lacks the required write access. No remote branch, pull request or preview deployment was created. Publishing requires terminal Git credentials or a GitHub integration with repository Contents write access. A portable Git bundle and patch are available under ignored `output/`.
