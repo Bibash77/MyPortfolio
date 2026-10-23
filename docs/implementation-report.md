@@ -41,6 +41,6 @@ Professional evidence is self-published. Existing “Present” dates, high-leve
 
 ## Delivery status
 
-Feature branch: `feature/japanese-localization-companion` (local). The implementation is committed. `docs/pull-request.md` contains the prepared PR title/body. The working tree is clean after committing delivery documentation.
+Feature branch: `feature/japanese-localization-companion` (published to GitHub). The implementation is committed. `docs/pull-request.md` contains the prepared PR title/body. The working tree is clean after committing delivery documentation.
 
-Publishing is blocked by external credentials: terminal Git cannot authenticate to HTTPS GitHub, and the connected GitHub integration returns HTTP 403 `Resource not accessible by integration` when creating the Git tree. The repository metadata indicates the account has push rights, but the integration itself lacks the required write access. No remote branch, pull request or preview deployment was created. Publishing requires terminal Git credentials or a GitHub integration with repository Contents write access. A portable Git bundle and patch are available under ignored `output/`.
+Publishing succeeded using the account's existing SSH authentication. The repository's push URL now uses `git@github.com:Bibash77/MyPortfolio.git`; its fetch URL is unchanged. HTTPS Git credentials are unavailable, and the connected GitHub integration still returns HTTP 403 `Resource not accessible by integration` for write operations, including PR creation. The feature branch is published, but no PR was created. `docs/pull-request.md` contains the prepared description. No merge or production deployment was performed. A portable Git bundle and patch are available under ignored `output/`.
