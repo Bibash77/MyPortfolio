@@ -70,13 +70,13 @@ if __name__=='__main__':
  dictionaries={lang:{(s if s.startswith(('meta.','ui.')) else key(s)):v[lang] for s,v in CAT.items()} for lang in ('en','ja')}
  (ROOT/'i18n/messages.js').write_text('window.MESSAGES='+json.dumps(dictionaries,ensure_ascii=False)+';\n')
  (ROOT/'data/profile.js').write_text('window.PROFILE='+json.dumps({l:profile(l) for l in ('en','ja')},ensure_ascii=False,indent=2)+';\n')
- for lang,path,geo in [('en','index.html',''),('en','en/index.html',''),('ja','ja/index.html',''),('ja','geo-ja.html','JP'),('en','geo-en.html','OTHER')]:
+ for lang,path in [('ja','index.html'),('en','en/index.html'),('ja','ja/index.html')]:
   html='<!doctype html>\n'+render(p.root,lang)
-  html=html.replace('<head>','<head>\n  <base href="/">\n  <script>window.HOST_COUNTRY='+json.dumps(geo)+';</script>\n  <script src="i18n/locale.js"></script>')
+  html=html.replace('<head>','<head>\n  <base href="/">\n  <script src="i18n/locale.js"></script>')
   seo=f'<link rel="canonical" href="https://www.bibashbogati.com.np/{lang}/"><link rel="alternate" hreflang="en" href="https://www.bibashbogati.com.np/en/"><link rel="alternate" hreflang="ja" href="https://www.bibashbogati.com.np/ja/"><link rel="alternate" hreflang="x-default" href="https://www.bibashbogati.com.np/"><meta property="og:title" data-i18n-content="{key("Bibash Bogati | Full-Stack Software Engineer")}" content="{escape(CAT["Bibash Bogati | Full-Stack Software Engineer"][lang])}"><meta property="og:description" data-i18n-content="meta.description" content="{escape(CAT["meta.description"][lang])}"><meta property="og:locale" content="{"ja_JP" if lang=="ja" else "en_US"}"><meta property="og:url" content="https://www.bibashbogati.com.np/{lang}/"><link rel="stylesheet" href="companion/companion.css">'
   html=html.replace('</head>',seo+'</head>')
   switch='<div class="locale-switch" role="group" aria-label="'+('表示言語' if lang=='ja' else 'Display language')+'"><button type="button" data-locale="en" aria-pressed="'+str(lang=='en').lower()+'">EN</button><span aria-hidden="true">|</span><button type="button" data-locale="ja" aria-pressed="'+str(lang=='ja').lower()+'" lang="ja">日本語</button></div>'
   html=html.replace('<div class="nav-actions">','<div class="nav-actions">'+switch,1)
   html=html.replace('<script src="script.js"></script>','<script src="i18n/messages.js"></script><script src="data/profile.js"></script><script src="i18n/apply.js"></script><script src="script.js"></script><script src="companion/prompts.js"></script><script src="companion/companion.js"></script>')
   dest=ROOT/path;dest.parent.mkdir(exist_ok=True);dest.write_text(html)
- print('Built 5 pages, '+str(len(CAT))+' bilingual entries, 18 projects and 5 employers per locale.')
+ print('Built 3 pages, '+str(len(CAT))+' bilingual entries, 18 projects and 5 employers per locale.')

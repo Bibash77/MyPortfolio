@@ -67,12 +67,10 @@ const base=process.env.PORTFOLIO_URL||'http://127.0.0.1:8080';
   await page.reload();check(await page.locator('html').getAttribute('lang')===locale);
  }
  await context.close();
- // Auto-selection on static hosts, saved preference, unavailable storage, explicit URL conflicts.
- for(const [country,locale,stored,path,want] of [['JP','en-US',null,'/','ja'],['US','ja-JP',null,'/','en'],['JP','en-US','en','/','en'],['US','en-US','ja','/','ja'],['','ja-JP',null,'/','ja'],['','en-US',null,'/','en'],['JP','en-US','en','/ja/','ja'],['US','ja-JP','ja','/en/','en']]){
+ // Japanese root default, saved preference, and explicit URL conflicts.
+ for(const [country,locale,stored,path,want] of [['JP','en-US',null,'/','ja'],['US','ja-JP',null,'/','ja'],['JP','en-US','en','/','en'],['US','en-US','ja','/','ja'],['','ja-JP',null,'/','ja'],['','en-US',null,'/','ja'],['JP','en-US','en','/ja/','ja'],['US','ja-JP','ja','/en/','en']]){
   const c=await browser.newContext({locale});const p=await c.newPage();
   if(stored)await c.addInitScript(value=>localStorage.setItem('portfolio.locale',value),stored);
-  // Simulate only the hosting rewrite by serving the generated country-specific document at root.
-  if(country)await p.route(base+'/',r=>r.fulfill({contentType:'text/html',body:fs.readFileSync(country==='JP'?'geo-ja.html':'geo-en.html','utf8')}));
   await p.goto(base+path);await p.waitForSelector('#byte-trigger');check(await p.locator('html').getAttribute('lang')===want);await c.close();
  }
  const c=await browser.newContext({reducedMotion:'reduce',locale:'en-US'});const p=await c.newPage();await c.addInitScript(()=>{Object.defineProperty(window,'localStorage',{get(){throw new Error('blocked')}})});await p.goto(base+'/ja/');await p.waitForSelector('#byte-trigger');
