@@ -7,9 +7,9 @@ const ctx = {window:{}};vm.runInNewContext(fs.readFileSync('data/profile.js','ut
 let checks=0;
 function check(v){assert.ok(v);checks++;}
 for(const [input,want] of [
- [{path:'/',country:'JP',languages:['en-US']},'ja'],[{path:'/',country:'US',languages:['ja']},'en'],
+ [{path:'/',country:'JP',languages:['en-US']},'ja'],[{path:'/',country:'US',languages:['ja']},'ja'],
  [{path:'/',country:'JP',saved:'en'},'en'],[{path:'/',country:'US',saved:'ja'},'ja'],
- [{path:'/',languages:['ja-JP']},'ja'],[{path:'/',languages:['en']},'en'],[{path:'/'},'en'],
+ [{path:'/',languages:['ja-JP']},'ja'],[{path:'/',languages:['en']},'ja'],[{path:'/'},'ja'],
  [{path:'/ja/',saved:'en',country:'US'},'ja'],[{path:'/en/',saved:'ja',country:'JP'},'en'],
  [{path:'/',saved:'invalid',languages:['ja']},'ja']
 ])check(chooseLocale(input)===want);
@@ -27,5 +27,5 @@ for(const lang of ['en','ja']){
  }
  const html=fs.readFileSync(lang+'/index.html','utf8');check(html.includes('lang="'+lang+'"'));check(html.includes('hreflang="ja"'));check(html.includes('data-i18n-content="meta.description"'));
 }
-const config=JSON.parse(fs.readFileSync('vercel.json','utf8'));check(config.rewrites[0].has[0].value==='JP');check(config.rewrites[0].destination==='/geo-ja.html');check(config.rewrites[1].destination==='/geo-en.html');
+const config=JSON.parse(fs.readFileSync('vercel.json','utf8'));check(!config.rewrites);check(fs.readFileSync('index.html','utf8').includes('<html lang="ja">'));
 console.log(`${checks} locale, catalog, prompt and static-route assertions passed.`);

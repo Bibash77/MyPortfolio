@@ -1,5 +1,10 @@
 # Localization and companion implementation report
 
+## Current default (owner-requested update)
+
+Japanese is now the default at the root URL for every visitor, including English browsers outside Japan. Saved explicit preferences and `/en/` or `/ja/` URLs remain respected. The root is prerendered in Japanese, and the previous country rewrites and country-specific generated files were removed. This supersedes the geographic-default architecture described in the historical implementation notes below. The build now emits three pages, and the updated integrity suite passes 409 assertions. No production merge or deployment has been performed.
+
+
 ## Baseline
 
 - Repository baseline: `dc6300f` on `main` (18 project cards, five employers).
